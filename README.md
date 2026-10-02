@@ -1,2 +1,13 @@
-# kuro-no-yorusanpo
-Repository name kuro-no-yorusanpo  Description クロの夜さんぽ - Web Game  Public ●  Add a README file ✓  .gitignore None  License None
+# クロとまったりハチワレさんの流氷RUN
+
+Build 2026.10.02-01
+
+ZIPを展開し、index.html、game.js、style.css、assetsフォルダを同じ階層のままGitHub Pagesの公開対象へアップロードしてください。外部ライブラリやビルド工程は不要です。
+
+操作：スタート→画面タップまたはJUMPでジャンプ。空中で1回追加ジャンプ。魚は50点。移動距離も加点。海に落ちると終了。右上に端末の現在時刻と一時停止ボタン。ベストスコアは端末内に保存します。
+
+横向きを推奨。縦向きでも操作可能ですが画面の比率が変わります。描画はdevicePixelRatio対応（最大3）。60fpsを目標にrequestAnimationFrameと時間差分で更新します。実機での60fpsは未保証です。
+
+背景・キャラクター素材は添付完成イメージを参考に新規生成。走行4コマ、ジャンプ姿勢、落下時の傾き、追従するハチワレさんを実装。素材生成：標準画像生成。プロンプト方針：黒猫の青い目、ピンクの耳と鼻、4本脚と尻尾／グレー白の猫、琥珀色の目、赤チェックマフラー／オーロラ、月、雪山、青い海の高精細2Dピクセルイラスト。
+
+毎回、入口ファイル名はindex.htmlを維持し、改訂時はindex.html内のBUILD表示とgame.jsのBUILD定数を同じ番号へ更新してください。
