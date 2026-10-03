@@ -7,3 +7,19 @@
 @media(orientation:landscape) and (max-height:600px){#sapphireContent{grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;gap:2px 12px}#sapphireCopy{grid-column:1;grid-row:1}#sapphireGemSpace{grid-column:2;grid-row:1}#sapphireGem{width:min(32vw,48vh,260px)}#sapphireCats{grid-column:2;grid-row:2;height:22vh;width:34vw}#sapphireNext{position:absolute;bottom:max(16px,env(safe-area-inset-bottom));left:max(24px,env(safe-area-inset-left));max-width:43vw}#sapphireCopy h2{font-size:clamp(18px,3vw,28px)}#sapphireCopy strong{margin-top:6px}}
 @media(max-width:430px){.tools{gap:5px}time,#pause,#bgmToggle{font-size:18px;padding:6px 8px}#autoToggle{min-width:70px;padding:6px;font-size:11px}#hud{padding-left:12px;padding-right:12px}.scores{font-size:18px}.scores strong{margin-left:4px}}
 @media(orientation:landscape) and (max-height:600px){#sapphireContent{grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr;padding-bottom:46px}#sapphireCopy{grid-column:1;grid-row:1}#sapphireGemSpace{grid-column:2;grid-row:1}#sapphireGem{width:min(26vw,52vh,260px)}#sapphireCats{grid-column:3;grid-row:1;width:26vw;height:30vh}#sapphireNext{left:50%;transform:translateX(-50%);max-width:80vw}#sapphireCopy h2{font-size:clamp(16px,2.5vw,24px)}#sapphireCopy small{font-size:9px;letter-spacing:1px}}
+/* FIT1: always fit the visible Safari viewport, including browser bar changes. */
+html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%;min-width:0}
+#game{position:fixed;inset:auto;left:0;top:0;width:100%;height:100dvh;max-width:100%;touch-action:none}
+#hud{min-width:0;gap:8px}.scores{min-width:0;overflow-wrap:anywhere}.tools{flex-shrink:0;gap:8px}
+#nowPlaying{max-width:calc(100% - 32px);font-size:clamp(10px,1.6vw,16px)}
+#panel{padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}.card{min-width:0;max-width:100%;max-height:100%;padding:20px 24px}.rewardCard{min-width:0;width:min(100%,520px)}
+@media(max-width:480px){#hud{padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 0 max(12px,env(safe-area-inset-left));gap:6px}.scores{font-size:15px;letter-spacing:0}.scores strong{margin-left:3px}.names{font-size:9px;max-width:130px}.tools{gap:4px}#clock{font-size:17px;padding:6px;min-width:58px}#autoToggle{font-size:11px;min-width:64px;padding:6px 4px}#bgmToggle,#pause{font-size:17px;padding:6px;min-width:34px}#nowPlaying{top:max(78px,calc(env(safe-area-inset-top) + 66px));padding:6px 9px;font-size:11px}#stageHud{left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));font-size:10px;padding:6px 8px}#jump{right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));padding:10px 18px}}
+#game[data-compact="true"] #hud{display:grid;grid-template-columns:1fr;gap:6px;align-content:start}
+#game[data-compact="true"] .tools{justify-self:end}
+#game[data-compact="true"] .names{display:none}
+#game[data-compact="true"] #nowPlaying{top:max(115px,calc(env(safe-area-inset-top) + 103px))}
+@media(orientation:landscape) and (max-height:500px){.scores{font-size:22px}#clock{font-size:22px}#pause,#bgmToggle{font-size:22px}#autoToggle{font-size:12px;min-width:78px}.tools{gap:6px}#nowPlaying{top:max(58px,calc(env(safe-area-inset-top) + 48px));font-size:12px;padding:5px 12px}#hud{padding-top:max(10px,env(safe-area-inset-top))}.card{padding:10px 20px}}
+#game[data-compact="true"] .tools{gap:2px}
+#game[data-compact="true"] #clock{font-size:15px;min-width:44px;padding:5px 3px}
+#game[data-compact="true"] #autoToggle{font-size:9px;min-width:55px;padding:5px 2px}
+#game[data-compact="true"] #bgmToggle,#game[data-compact="true"] #pause{font-size:15px;min-width:28px;padding:5px 3px}
