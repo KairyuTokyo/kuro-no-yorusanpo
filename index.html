@@ -25,8 +25,8 @@ html,body{-webkit-text-size-adjust:100%;text-size-adjust:100%;min-width:0}
 #game[data-compact="true"] #clock{font-size:15px;min-width:44px;padding:5px 3px}
 #game[data-compact="true"] #autoToggle{font-size:9px;min-width:55px;padding:5px 2px}
 #game[data-compact="true"] #bgmToggle,#game[data-compact="true"] #pause{font-size:15px;min-width:28px;padding:5px 3px}
-</style></head><body><main id="game"><canvas id="scene" aria-label="流氷をジャンプして渡るゲーム"></canvas><div id="hud"><div class="scores">SCORE <strong id="score">0</strong><small>BEST <span id="best">0</span></small><div class="names">クロ ＆ まったりハチワレさん</div></div><div class="tools"><time id="clock">--:--</time><button id="autoToggle" aria-label="自動ジャンプ切替">AUTO ON</button><button id="bgmToggle" aria-label="BGMオン・オフ">🔊</button><button id="pause" aria-label="一時停止">Ⅱ</button></div></div><div id="nowPlaying">♪ Tides of Mercy / Ω feat. Kairyu Tokyo</div><div id="stageHud">STAGE <span id="stageNo">1</span> / <span id="stageTotal">13</span><br>🪙 KC <span id="coinTotal">0</span> · 🎖️ <span id="medalTotal">0</span></div><div id="goalBanner"><small>THE AURORA GATE IS OPEN</small>AURORA GOAL ✦</div><button id="jump" aria-label="ジャンプ">JUMP <span>タップ</span></button><div id="panel"><div class="card"><div class="eyebrow">AURORA ICE ADVENTURE</div><h1>クロとまったり<br>ハチワレさんの<span>流氷RUN</span></h1><p id="message">ふたりで渡ろう、オーロラの海。<br>タップでジャンプ。魚を集めて流氷を渡ろう。</p><button id="start">スタート ▷</button><p class="instructions">画面タップ / Spaceでジャンプ・空中でもう1回<br>横向き推奨 · AUTOで4つ打ちBGM同期＋落下防止ジャンプ · Ω feat. Kairyu Tokyo BGM</p><div id="build">BUILD 2026.10.03-13STAGE-SAPPHIRE-FIT6</div></div></div><div id="loading">グラフィックを読み込み中…</div></main><script src="assets/music/extra_tracks.js"></script><script>'use strict';
-const BUILD='2026.10.03-13STAGE-SAPPHIRE-FIT6';
+</style></head><body><main id="game"><canvas id="scene" aria-label="流氷をジャンプして渡るゲーム"></canvas><div id="hud"><div class="scores">SCORE <strong id="score">0</strong><small>BEST <span id="best">0</span></small><div class="names">クロ ＆ まったりハチワレさん</div></div><div class="tools"><time id="clock">--:--</time><button id="autoToggle" aria-label="自動ジャンプ切替">AUTO ON</button><button id="bgmToggle" aria-label="BGMオン・オフ">🔊</button><button id="pause" aria-label="一時停止">Ⅱ</button></div></div><div id="nowPlaying">♪ Tides of Mercy / Ω feat. Kairyu Tokyo</div><div id="stageHud">STAGE <span id="stageNo">1</span> / <span id="stageTotal">13</span><br>🪙 KC <span id="coinTotal">0</span> · 🎖️ <span id="medalTotal">0</span></div><div id="goalBanner"><small>THE AURORA GATE IS OPEN</small>AURORA GOAL ✦</div><button id="jump" aria-label="ジャンプ">JUMP <span>タップ</span></button><div id="panel"><div class="card"><div class="eyebrow">AURORA ICE ADVENTURE</div><h1>クロとまったり<br>ハチワレさんの<span>流氷RUN</span></h1><p id="message">ふたりで渡ろう、オーロラの海。<br>タップでジャンプ。魚を集めて流氷を渡ろう。</p><button id="start">スタート ▷</button><p class="instructions">画面タップ / Spaceでジャンプ・空中でもう1回<br>横向き推奨 · AUTOで4つ打ちBGM同期＋落下防止ジャンプ · Ω feat. Kairyu Tokyo BGM</p><div id="build">BUILD 2026.10.03-13STAGE-SAPPHIRE-FIT7</div></div></div><div id="loading">グラフィックを読み込み中…</div></main><script src="assets/music/extra_tracks.js"></script><script>'use strict';
+const BUILD='2026.10.03-13STAGE-SAPPHIRE-FIT7';
 const BGM_TRACKS=[
   {title:'Gentle Rain',src:'assets/music/Gentle_Rain.mp3',bpm:128,phase:.153},
   {title:'Into the Light',src:'assets/music/Into_the_Light.mp3',bpm:128,phase:.145},
@@ -138,24 +138,59 @@ function draw(){drawBackground();drawLivingSky();drawMarine();for(const p of pla
 let oceanEvent=null,oceanEventPlayed=false,oceanStageEndPending=false;
 function beginOceanEvent(){if(state!=='running'||oceanEventPlayed)return;oceanEventPlayed=true;oceanEvent={time:0};state='oceanEvent';$('#jump').style.visibility='hidden'}
 function tickOceanEvent(dt){oceanEvent.time+=dt;if(oceanEvent.time>=26){oceanEvent=null;state='running';$('#jump').style.visibility='';if(oceanStageEndPending){oceanStageEndPending=false;clearStage()}}}
-function drawOceanEvent(){
- const t=oceanEvent.time,clamp=v=>Math.max(0,Math.min(1,v));
- ctx.save();if(t>=4&&t<9){const q=Math.sin(t*39)*W*.009*(1-clamp((t-7)/2));ctx.translate(q,Math.cos(t*43)*H*.009)}
- drawBackground();drawLivingSky();
- if(t<4){ctx.fillStyle='rgba(255,123,60,'+(.07*Math.sin(t/4*Math.PI))+')';ctx.fillRect(0,0,W,H);for(let i=0;i<15;i++){const x=W*(i/15),y=H*.62+Math.sin(t*2+i)*H*.025;ctx.strokeStyle='rgba(255,205,149,.2)';ctx.beginPath();ctx.moveTo(x,y);ctx.bezierCurveTo(x+12,y-25,x-12,y-55,x,y-80);ctx.stroke()}}
- // A distant ice wall fractures, then large shards fall into the water.
- if(t>=4&&t<12){const k=clamp((t-6)/3);for(let i=0;i<8;i++){const x=W*(.55+i*.045)+Math.sin(i*3)*k*W*.02,y=H*.55+k*k*H*.20+i%3*H*.012;ctx.save();ctx.translate(x,y);ctx.rotate(k*(i%2?1:-1)*.8);ctx.fillStyle=i%2?'#c3f3ff':'#79cce9';ctx.beginPath();ctx.moveTo(-W*.025,0);ctx.lineTo(-W*.019,-H*.13);ctx.lineTo(W*.011,-H*.15);ctx.lineTo(W*.025,0);ctx.closePath();ctx.fill();ctx.strokeStyle='#ecffff';ctx.lineWidth=2;ctx.stroke();ctx.restore()}for(let i=0;i<25;i++){const q=clamp((t-8)/2),x=W*(.5+i*.017),y=H*.67-Math.sin(q*Math.PI)*H*(.025+(i%5)*.015);ctx.globalAlpha=1-q;ctx.fillStyle='#efffff';ctx.fillRect(x,y,3,8)}ctx.globalAlpha=1}
- const rising=clamp((t-9)/5),surf=clamp((t-13)/10),exit=clamp((t-22)/4);
- if(t>=9){const waveY=H*(.77-rising*.30+exit*.20);ctx.fillStyle='#057ba8';ctx.beginPath();ctx.moveTo(0,H);ctx.lineTo(0,waveY+H*.10);ctx.bezierCurveTo(W*.35,waveY+H*.15,W*.50,waveY-H*.18,W,waveY-H*.08);ctx.lineTo(W,H);ctx.closePath();ctx.fill();const g=ctx.createLinearGradient(0,waveY-H*.15,0,H);g.addColorStop(0,'#6eeaff');g.addColorStop(.3,'#119fc5');g.addColorStop(1,'#003b67');ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(W,H);ctx.lineTo(W,waveY-H*.13);ctx.bezierCurveTo(W*.74,waveY-H*.33,W*.38,waveY-H*.23,W*.30,waveY+H*.10);ctx.bezierCurveTo(W*.52,waveY-H*.06,W*.82,waveY+H*.22,W,H);ctx.fill();
- // A hollow wave curls over both boards; the opening expands as they exit.
- if(t>=13&&t<24){ctx.fillStyle='#03354d';ctx.beginPath();ctx.ellipse(W*(.61-exit*.06),H*.68,W*(.25+exit*.10),H*.17,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#38c6df';ctx.lineWidth=H*.035;ctx.stroke();}
- for(let i=0;i<36;i++){const x=((i*.037+t*.12)%1)*W,y=waveY+Math.sin(i*.9+t*4)*H*.026;ctx.fillStyle='rgba(233,255,255,.8)';ctx.beginPath();ctx.ellipse(x,y,3+(i%4),2,0,0,Math.PI*2);ctx.fill()}}
- if(t<13){drawCat(1,companion.x,companion.y,companion);drawCat(0,cat.x,cat.y,cat)}else{
-  for(let which=0;which<2;which++){const x=W*(.40+which*.20+exit*.14),y=H*(.76+Math.sin(t*2.4+which)*.012-exit*.04),bw=Math.min(W*.18,230),cw=bw*.75;ctx.save();ctx.translate(x,y);ctx.rotate(Math.sin(t*2+which)*.05-exit*.1);ctx.fillStyle=which?'#ffad76':'#ffd94d';ctx.beginPath();ctx.ellipse(0,0,bw/2,H*.011,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fcffff';ctx.lineWidth=2;ctx.stroke();const b=LAND_BOUNDS[which],ch=cw*b[3]/b[2];if(which)drawHachiTile(ctx,images.landing,b,-cw/2,-ch-4,cw,ch);else ctx.drawImage(images.landing,...b,-cw/2,-ch-4,cw,ch);ctx.restore();for(let i=0;i<6;i++){ctx.fillStyle='rgba(214,253,255,.65)';ctx.fillRect(x-bw*.5-i*8,y+Math.sin(t*10+i)*6,5,2)}}
+function icePolygon(points){ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath()}
+function drawCalving(t){
+ const water=H*.66;ctx.save();ctx.beginPath();ctx.rect(0,H*.34,W,H*.43);ctx.clip();
+ // A single broad glacier front, rather than separate narrow pillars.
+ for(let i=0;i<7;i++){const x=W*(.34+i*.085),w=W*.097,h=H*(.12+(.5+.5*Math.sin(i*2.1))*.075),delay=5.7+i*.28,q=Math.max(0,Math.min(1,(t-delay)/2.5));
+ ctx.save();ctx.translate(x+q*q*W*.035,water+q*q*H*.18);ctx.rotate(q*q*(.45+Math.sin(i)*.28));
+ const poly=[[0,0],[w,0],[w*.95,-h*.65],[w*.7,-h*.9],[w*.38,-h],[w*.14,-h*.84],[-w*.08,-h*.44]];icePolygon(poly);const g=ctx.createLinearGradient(0,-h,w,0);g.addColorStop(0,'#eaffff');g.addColorStop(.35,'#a8e5f2');g.addColorStop(1,'#368cad');ctx.fillStyle=g;ctx.fill();ctx.strokeStyle='#c5f8ff';ctx.lineWidth=2;ctx.stroke();
+ ctx.fillStyle='rgba(32,106,154,.38)';icePolygon([[w*.38,-h],[w*.57,-h*.52],[w*.49,0],[w*.9,0],[w*.95,-h*.65],[w*.7,-h*.9]]);ctx.fill();
+ ctx.strokeStyle='rgba(18,74,110,'+Math.min(1,(t-4)*.35)+')';ctx.lineWidth=1+q*2;ctx.beginPath();ctx.moveTo(w*.44,-h*.92);ctx.lineTo(w*.36,-h*.55);ctx.lineTo(w*.53,-h*.36);ctx.lineTo(w*.46,0);ctx.stroke();ctx.restore();
+ const hit=Math.max(0,t-delay-1.1);if(hit>0&&hit<2.4){for(let j=0;j<16;j++){const a=j/16*Math.PI,v=H*(.045+(j%4)*.016),px=x+w*.5+Math.cos(a)*hit*W*.085,py=water-Math.sin(a)*v*hit+H*.10*hit*hit;ctx.globalAlpha=Math.max(0,1-hit/2.4);ctx.fillStyle='#d6faff';ctx.beginPath();ctx.ellipse(px,py,2+j%3,5+j%5,Math.cos(a)*.4,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;ctx.strokeStyle='rgba(185,248,255,'+(1-hit/2.4)+')';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(x+w*.6,water,hit*W*.09,hit*H*.013,0,0,Math.PI*2);ctx.stroke()}}
+ ctx.restore();
+}
+function waveShape(curl){
+ ctx.beginPath();ctx.moveTo(0,H);ctx.lineTo(0,H*.88);
+ ctx.bezierCurveTo(W*.16,H*.82,W*.20,H*.44,W*.45,H*.38);
+ ctx.bezierCurveTo(W*.64,H*.29,W*.92,H*.38,W*.93,H*(.52+curl*.12));
+ ctx.bezierCurveTo(W*.94,H*(.66+curl*.06),W*.81,H*.77,W*.70,H*.77);
+ ctx.bezierCurveTo(W*.82,H*.64,W*.77,H*.51,W*.62,H*.49);
+ ctx.bezierCurveTo(W*.42,H*.47,W*.35,H*.64,W*.31,H*.82);
+ ctx.bezierCurveTo(W*.50,H*.84,W*.73,H*.90,W,H*.83);ctx.lineTo(W,H);ctx.closePath();
+}
+function drawBreakingWave(t,front=false){
+ const exit=Math.max(0,Math.min(1,(t-22)/4)),rise=Math.max(0,Math.min(1,(t-9)/4)),curl=Math.max(0,Math.min(1,(t-12)/3));
+ ctx.save();const waveScale=Math.min(1,W*.75/H);ctx.translate(0,H*.85*(1-waveScale));ctx.scale(1,waveScale);ctx.translate((1-rise)*W*.65-exit*W*.8,(1-rise)*H*.17+exit*H*.10);
+ if(!front){
+  // The shaded concave face is behind the riders; the lip is drawn in front later.
+  const face=ctx.createLinearGradient(W*.55,H*.46,W*.50,H*.93);face.addColorStop(0,'#082e42');face.addColorStop(.35,'#07546b');face.addColorStop(.68,'#159fbc');face.addColorStop(1,'#01425d');ctx.fillStyle=face;ctx.beginPath();ctx.moveTo(0,H);ctx.lineTo(0,H*.86);ctx.bezierCurveTo(W*.22,H*.91,W*.35,H*.52,W*.58,H*.46);ctx.bezierCurveTo(W*.80,H*.38,W,H*.55,W,H*.83);ctx.lineTo(W,H);ctx.fill();
+  waveShape(curl);ctx.save();ctx.clip();const water=ctx.createLinearGradient(0,H*.30,0,H);water.addColorStop(0,'#a9f4ef');water.addColorStop(.18,'#48cad4');water.addColorStop(.4,'#087d9b');water.addColorStop(1,'#043e60');ctx.fillStyle=water;ctx.fillRect(0,0,W,H);
+  // Curved, moving water striations convey the volume and direction of flow.
+  for(let i=0;i<64;i++){const q=((i/64+t*.065)%1),x=q*W;ctx.strokeStyle='rgba(165,245,249,'+(.045+(i%4)*.027)+')';ctx.lineWidth=1+i%3;ctx.beginPath();ctx.moveTo(x-W*.1,H*.44);ctx.bezierCurveTo(x+W*.13,H*.37,x-W*.02,H*.70,x-W*.12,H*.97);ctx.stroke()}
+  ctx.restore();
+ }else{
+  // A curling sheet, not an oval outline; falling foam obscures parts of the riders.
+  ctx.strokeStyle='rgba(200,255,252,.65)';ctx.lineWidth=H*.018;ctx.beginPath();ctx.moveTo(W*.24,H*.57);ctx.bezierCurveTo(W*.34,H*.37,W*.58,H*.32,W*.78,H*.40);ctx.bezierCurveTo(W*.97,H*.48,W*.95,H*.69,W*.73,H*.76);ctx.stroke();
+  for(let i=0;i<110;i++){const u=i/109,angle=-2.65+u*3.45,x=W*(.60+.31*Math.cos(angle)),y=H*(.55+.20*Math.sin(angle)),flutter=Math.sin(t*7+i*2.3);ctx.globalAlpha=.35+.55*(.5+.5*Math.sin(i*8.1+t));ctx.fillStyle=i%3?'#dffffa':'#8edfe9';ctx.beginPath();ctx.ellipse(x+flutter*W*.005,y+Math.sin(t*5+i)*H*.007,2+(i%5),2+(i%4),angle,0,Math.PI*2);ctx.fill();if(i%3===0){const age=(t*.8+i*.071)%1;ctx.fillRect(x+age*W*.06,y+age*age*H*.12,2,4)}}ctx.globalAlpha=1;
  }
  ctx.restore();
- const title=t<4?'WARMING OCEAN':t<8?'EARTHQUAKE':t<11?'ICEBERG COLLAPSE':t<14?'TSUNAMI APPROACHING':t<22?'KURO & HACHIWARE · TUBE RIDE':'BARREL EXIT! 🏄';
- ctx.save();ctx.font='900 '+Math.min(28,W*.035)+'px sans-serif';ctx.textAlign='center';ctx.fillStyle='#e0ffff';ctx.shadowColor='#01263e';ctx.shadowBlur=8;ctx.fillText(title,W/2,H*.22);ctx.restore();
+}
+function drawSurfRiders(t){
+ const u=Math.max(0,Math.min(1,(t-13)/9)),exit=Math.max(0,Math.min(1,(t-22)/4));
+ for(let which=0;which<2;which++){const phase=u*Math.PI*2+which*.4,x=W*(.32+which*.17+u*.14+exit*.18),y=H*.85*(1-Math.min(1,W*.75/H))+Math.min(H,W*.75)*(.77-.10*Math.sin(Math.min(1,u*1.3)*Math.PI)+which*.016+Math.sin(t*3+which)*.006),bw=Math.min(W*.19,210),cw=bw*.72;
+ ctx.save();ctx.translate(x,y);ctx.rotate(-.12*Math.cos(u*Math.PI*1.6)+exit*.08);ctx.fillStyle=which?'#ffad76':'#ffd94d';ctx.beginPath();ctx.moveTo(-bw*.5,0);ctx.quadraticCurveTo(0,-H*.009,bw*.5,-H*.014);ctx.quadraticCurveTo(bw*.4,H*.016,-bw*.45,H*.009);ctx.closePath();ctx.fill();ctx.strokeStyle='#fff5d7';ctx.lineWidth=2;ctx.stroke();const b=LAND_BOUNDS[which],ch=cw*b[3]/b[2],crouch=.84+.07*Math.sin(phase);ctx.save();ctx.scale(1,crouch);if(which)drawHachiTile(ctx,images.landing,b,-cw/2,-ch-4,cw,ch);else ctx.drawImage(images.landing,...b,-cw/2,-ch-4,cw,ch);ctx.restore();ctx.restore();
+ for(let i=0;i<14;i++){const age=(t*2+i*.067)%1;ctx.globalAlpha=(1-age)*.75;ctx.strokeStyle='#ceffff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-bw*.35-age*W*.07,y-age*H*.018);ctx.lineTo(x-bw*.38-age*W*.09,y-age*H*.02);ctx.stroke()}ctx.globalAlpha=1;
+ }
+}
+function drawOceanEvent(){
+ const t=oceanEvent.time;ctx.save();if(t>=4&&t<9){const q=Math.sin(t*39)*W*.009*(1-Math.max(0,Math.min(1,(t-7)/2)));ctx.translate(q,Math.cos(t*43)*H*.009)}drawBackground();drawLivingSky();
+ if(t<4){ctx.fillStyle='rgba(255,123,60,'+(.07*Math.sin(t/4*Math.PI))+')';ctx.fillRect(0,0,W,H)}
+ if(t>=4&&t<12)drawCalving(t);
+ if(t>=9)drawBreakingWave(t);
+ if(t<13){drawCat(1,companion.x,companion.y,companion);drawCat(0,cat.x,cat.y,cat)}else drawSurfRiders(t);
+ if(t>=9)drawBreakingWave(t,true);ctx.restore();
+ const title=t<4?'WARMING OCEAN':t<8?'EARTHQUAKE':t<11?'ICEBERG COLLAPSE':t<14?'TSUNAMI APPROACHING':t<22?'KURO & HACHIWARE · TUBE RIDE':'BARREL EXIT! 🏄';ctx.save();ctx.font='900 '+Math.min(28,W*.035)+'px sans-serif';ctx.textAlign='center';ctx.fillStyle='#e0ffff';ctx.shadowColor='#01263e';ctx.shadowBlur=8;ctx.fillText(title,W/2,H*.22);ctx.restore();
 }
 
 function loop(now){const dt=Math.min((now-last)/1000||0,.034);last=now;if(images.bg&&images.atlas){if(state==='running'){update(dt);if(stagePos===0&&elapsed>=35&&!oceanEventPlayed)beginOceanEvent()}if(state!=='paused')advanceSky(dt);if(state==='oceanEvent'){tickOceanEvent(dt);if(oceanEvent)drawOceanEvent();else draw()}else draw();if(state==='sapphire')tickSapphire(dt)}requestAnimationFrame(loop)}
